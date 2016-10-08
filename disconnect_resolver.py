@@ -5,7 +5,7 @@ from subprocess import Popen
 
 #server to test ping
 pingServer = "8.8.8.8"
-print os.getcwd() + "\resolved.wav"
+
 #call batch file to disconnect from internet
 def disconnect():
     Popen('disconnect.bat', cwd=os.getcwd())
