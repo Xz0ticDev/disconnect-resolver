@@ -1,28 +1,37 @@
 import os
-import platform
 import time
 from subprocess import Popen
 
+#server to test ping
 pingServer = "8.8.8.8"
 
-#method determines if ping is returned
+#call batch file to disconnect from internet
+def disconnect():
+    Popen('disconnect.bat', cwd=os.getcwd())
+
+#call batch file to connect to internet
+def connect():
+    Popen('connect.bat', cwd=os.getcwd())
+
+#detects connection errors
 def ping(host):
-    #determine ping command based on operating system
-    ping_str = "-n 1" if platform.system().lower() == "windows" else "-c 1"
 
     #return ping true or false
-    print (str)(os.system("ping " + ping_str + " " + host) == 0)
-    return os.system("ping " + ping_str + " " + host) == 0
+    print (str)(os.system("ping -n 1 " + host) == 0)
+    return os.system("ping -n 1 " + host) == 0
 
+#disconnect and reconnect to internet if  connection error was detected
 def resolve():
     if(ping(pingServer) == False):
-        disconnectBat = Popen('disconnect.bat', cwd=os.getcwd())
+        disconnect()
         time.sleep(2)
-        connectBat = Popen('connect.bat', cwd=os.getcwd())
+        connect()
         time.sleep(2)
 
+#loop program with 1 second interval
 while(True):
     resolve()
     time.sleep(1)
 
+#exit program
 exit()
