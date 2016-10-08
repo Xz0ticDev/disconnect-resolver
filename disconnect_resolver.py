@@ -1,17 +1,20 @@
 import os
 import time
+import winsound
 from subprocess import Popen
 
 #server to test ping
 pingServer = "8.8.8.8"
-
+print os.getcwd() + "\resolved.wav"
 #call batch file to disconnect from internet
 def disconnect():
     Popen('disconnect.bat', cwd=os.getcwd())
+    winsound.PlaySound(os.getcwd() + "\disconnected.wav", winsound.SND_FILENAME)
 
 #call batch file to connect to internet
 def connect():
     Popen('connect.bat', cwd=os.getcwd())
+    winsound.PlaySound(os.getcwd() + "\connected.wav", winsound.SND_FILENAME)
 
 #detects connection errors
 def ping(host):
