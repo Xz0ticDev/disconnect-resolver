@@ -3,9 +3,7 @@ import platform
 import time
 from subprocess import Popen
 
-
-
-
+pingServer = "8.8.8.8"
 
 #method determines if ping is returned
 def ping(host):
@@ -17,11 +15,14 @@ def ping(host):
     return os.system("ping " + ping_str + " " + host) == 0
 
 def resolve():
-    if(ping("8.8.8.8") == False):
-        disconnectBat = Popen('disconnect.bat', cwd=r"C:\Users\PC Master Race\Desktop\disconnect_resolver")
+    if(ping(pingServer) == False):
+        disconnectBat = Popen('disconnect.bat', cwd=os.getcwd())
         time.sleep(2)
-        connectBat = Popen('connect.bat', cwd=r"C:\Users\PC Master Race\Desktop\disconnect_resolver")
+        connectBat = Popen('connect.bat', cwd=os.getcwd())
+        time.sleep(2)
 
 while(True):
     resolve()
     time.sleep(1)
+
+exit()
