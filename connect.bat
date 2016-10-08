@@ -1,2 +1,6 @@
 @echo off
-netsh wlan connect ssid="Troiani Wi-Fi" name = "Troiani Wi-Fi" interface = "Wi-Fi 3"
+
+for /f "tokens=*" %%f in (ssid.txt) do set "ssid=%%f"
+for /f "tokens=*" %%f in (interface.txt) do set "interface=%%f"
+
+netsh wlan connect name="%ssid%" ssid="%ssid%" interface=%interface%
