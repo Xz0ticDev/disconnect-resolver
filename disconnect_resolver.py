@@ -17,7 +17,7 @@ def ping(host):
     return os.system("ping " + ping_str + " " + host) == 0
 
 def resolve():
-    if(ping("google.com") == False):
+    if(ping("8.8.8.8") == False):
         disconnectBat = Popen('disconnect.bat', cwd=r"C:\Users\PC Master Race\Desktop\disconnect_resolver")
         time.sleep(2)
         connectBat = Popen('connect.bat', cwd=r"C:\Users\PC Master Race\Desktop\disconnect_resolver")
