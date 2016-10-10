@@ -25,16 +25,24 @@ def ping(host):
 
 #disconnect and reconnect to internet if  connection error was detected
 def resolve():
-    if(ping(pingServer) == False):
+    if(ping(pingServer) == False or getRawPing() > 100):
         disconnect()
         time.sleep(2)
         connect()
         time.sleep(2)
 
-#loop program with 1 second interval
+def getRawPing():
+    ping = os.popen('ping ' + pingServer + ' -n 1')
+    result = ping.readlines()
+    msLine = result[-1].strip()
+    ms = msLine[len(msLine) - 4:len(msLine) - 2]
+    print ms
+    return int(ms)
+
+#loop program with 2 second interval
 while(True):
     resolve()
-    time.sleep(1)
+    time.sleep(2)
 
 #exit program
 exit()
