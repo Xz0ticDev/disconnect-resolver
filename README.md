@@ -3,4 +3,4 @@ Detects interruptions and delays on internet connection and attempts to resolve 
 
 
 Begin by running "credentials.bat" and entering your internet's SSID.
-Run start.bat and enjoy.
+Run "start.bat" and enjoy.
