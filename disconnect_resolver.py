@@ -25,6 +25,18 @@ def ping(host):
     #return ping true or false
     return os.system('ping -n 1 ' + host + " > nul") == 0
 
+    # returns ping as integer
+def getRawPing():
+    global totalPings
+    global numPings
+    ping = os.popen('ping ' + pingServer + ' -n 1')
+    result = ping.readlines()
+    msLine = result[-1].strip()
+    ms = msLine[len(msLine) - 4:len(msLine) - 2]
+    totalPings += int(ms)
+    numPings += 1
+    return int(ms)
+
 #disconnect and reconnect to internet if  connection error was detected
 def resolve():
 
@@ -36,26 +48,14 @@ def resolve():
         connect()
         time.sleep(1)
 
-    #checks for high ping
-    elif(getRawPing() > 100):
+            #checks for high ping
+    elif getRawPing() > 75:
         cprint("\n\nERROR: High latency.", 'red', attrs = ['bold'])
         disconnect()
         time.sleep(1)
         connect()
         time.sleep(1)
 
-#returns ping as integer
-def getRawPing():
-    global totalPings
-    global numPings
-    ping = os.popen('ping ' + pingServer + ' -n 1')
-    result = ping.readlines()
-    msLine = result[-1].strip()
-    ms = msLine[len(msLine) - 4:len(msLine) - 2]
-    totalPings += int(ms)
-    numPings += 1
-    print '\r{0}'.format("Average ping: " + str(totalPings / numPings) + "ms"),
-    return int(ms)
 
 #main function
 if __name__ == "__main__":
@@ -63,6 +63,7 @@ if __name__ == "__main__":
     #loop program with 2 second interval
     while(True):
         resolve()
+        print '\r{0}'.format("Current Ping: " + str(getRawPing()) + "ms                 " + "Average Ping: " + str(totalPings / numPings) + "ms")
         time.sleep(2)
 
 #exit program
